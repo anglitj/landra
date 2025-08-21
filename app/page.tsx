@@ -1,102 +1,133 @@
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Building, Users, DollarSign, MessageSquare } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <Building className="h-8 w-8 text-blue-600" />
+              <span className="ml-2 text-2xl font-bold text-gray-900">
+                Landra
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Link href="/auth/signin">
+                <Button variant="outline">Sign In</Button>
+              </Link>
+              <Link href="/auth/signin">
+                <Button>Get Started</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero Section */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold text-gray-900 mb-8">
+            AI-Powered Property Management
+            <span className="block text-blue-600">
+              for Filipino Property Owners
+            </span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
+            Streamline your property management with intelligent automation,
+            tenant communication, and financial tracking. Built specifically for
+            the Philippine real estate market.
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Link href="/auth/signin">
+              <Button size="lg" className="px-8">
+                Start Managing Properties
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" className="px-8">
+              Watch Demo
+            </Button>
+          </div>
+        </div>
+
+        {/* Features */}
+        <div className="mt-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            <Building className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Property Management
+            </h3>
+            <p className="text-gray-600">
+              Manage multiple properties and units with ease. Track
+              availability, pricing, and amenities.
+            </p>
+          </div>
+
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Tenant Management
+            </h3>
+            <p className="text-gray-600">
+              Keep track of tenant information, lease agreements, and
+              communication history.
+            </p>
+          </div>
+
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            <DollarSign className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Payment Tracking
+            </h3>
+            <p className="text-gray-600">
+              Monitor rent payments, track overdue amounts, and generate
+              financial reports.
+            </p>
+          </div>
+
+          <div className="bg-white p-8 rounded-lg shadow-md text-center">
+            <MessageSquare className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              AI Chatbot
+            </h3>
+            <p className="text-gray-600">
+              Automated tenant inquiries and lead generation with intelligent
+              responses.
+            </p>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-32 text-center bg-white rounded-2xl shadow-lg p-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Ready to Transform Your Property Management?
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Join hundreds of Filipino property owners who trust Landra to manage
+            their real estate investments.
+          </p>
+          <Link href="/auth/signin">
+            <Button size="lg" className="px-12">
+              Get Started Free
+            </Button>
+          </Link>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex items-center justify-center mb-4">
+            <Building className="h-6 w-6 text-blue-400" />
+            <span className="ml-2 text-xl font-bold">Landra</span>
+          </div>
+          <p className="text-gray-400">
+            Intelligent Property Management for Filipino Property Owners
+          </p>
+        </div>
       </footer>
     </div>
   );
