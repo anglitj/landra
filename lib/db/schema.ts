@@ -129,7 +129,7 @@ export const units = pgTable("units", {
   sizeSqm: decimal("size_sqm", { precision: 8, scale: 2 }),
   bedrooms: integer("bedrooms").default(0),
   bathrooms: integer("bathrooms").default(0),
-  isAvailable: boolean("is_available").default(true),
+  isAvailable: boolean("is_available").default(true).notNull(),
   images: json("images").$type<string[]>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
