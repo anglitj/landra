@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 // Property validation schema
 export const propertySchema = z.object({
@@ -29,11 +30,21 @@ export const tenantSchema = z.object({
   firstName: z.string().min(1, "First name is required").max(100),
   lastName: z.string().min(1, "Last name is required").max(100),
   email: z.string().email("Invalid email address").max(255),
-  phone: z.string().min(1, "Phone number is required").max(50),
+  phone: z
+    .string()
+    .min(1, "Phone number is required")
+    .refine((phone) => isValidPhoneNumber(phone), {
+      message: "Invalid phone number",
+    }),
   emergencyContact: z
     .object({
       name: z.string().min(1, "Emergency contact name is required"),
-      phone: z.string().min(1, "Emergency contact phone is required"),
+      phone: z
+        .string()
+        .min(1, "Emergency contact phone is required")
+        .refine((phone) => isValidPhoneNumber(phone), {
+          message: "Invalid phone number",
+        }),
       relationship: z.string().min(1, "Relationship is required"),
     })
     .optional(),
