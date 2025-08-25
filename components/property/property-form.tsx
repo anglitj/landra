@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { propertySchema, type PropertyFormData } from "@/lib/validations";
 import { createProperty, updateProperty } from "@/lib/actions/properties";
 import { Property } from "@/lib/db/schema";
@@ -32,6 +33,8 @@ export default function PropertyForm({ property, mode }: PropertyFormProps) {
     property?.amenities || []
   );
   const [newAmenity, setNewAmenity] = useState("");
+  const [images, setImages] = useState<string[]>(property?.images || []);
+  const [uploading, setUploading] = useState(false);
 
   const {
     register,
@@ -46,6 +49,7 @@ export default function PropertyForm({ property, mode }: PropertyFormProps) {
       description: property?.description || "",
       totalUnits: property?.totalUnits || 0,
       amenities: property?.amenities || [],
+      images: property?.images || [],
       rules: property?.rules || "",
     },
   });
@@ -65,11 +69,54 @@ export default function PropertyForm({ property, mode }: PropertyFormProps) {
     setValue("amenities", updatedAmenities);
   };
 
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    try {
+      const uploadPromises = Array.from(files).map(async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Upload failed");
+        }
+
+        const result = await response.json();
+        return result.url;
+      });
+
+      const uploadedUrls = await Promise.all(uploadPromises);
+      const updatedImages = [...images, ...uploadedUrls];
+      setImages(updatedImages);
+      setValue("images", updatedImages);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      alert("Failed to upload images. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
+    setValue("images", updatedImages);
+  };
+
   const onSubmit = async (data: PropertyFormData) => {
     setIsLoading(true);
 
     try {
-      const formData = { ...data, amenities };
+      const formData = { ...data, amenities, images };
 
       if (mode === "create") {
         const result = await createProperty(formData);
@@ -190,6 +237,47 @@ export default function PropertyForm({ property, mode }: PropertyFormProps) {
                       ×
                     </button>
                   </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <Label>Property Images</Label>
+            <div className="mt-2">
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                disabled={uploading}
+              />
+              {uploading && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Uploading images...
+                </p>
+              )}
+            </div>
+            {images.length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                {images.map((image, index) => (
+                  <div key={index} className="relative">
+                    <Image
+                      src={image}
+                      alt={`Property image ${index + 1}`}
+                      width={200}
+                      height={128}
+                      className="w-full h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
