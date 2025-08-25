@@ -104,6 +104,7 @@ export const properties = pgTable("properties", {
   description: text("description"),
   totalUnits: integer("total_units").default(0),
   amenities: json("amenities").$type<string[]>(),
+  images: json("images").$type<string[]>(),
   rules: text("rules"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
