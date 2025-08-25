@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Building, MapPin, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface PropertyListProps {
   properties: Property[];
@@ -41,6 +42,17 @@ export default function PropertyList({ properties }: PropertyListProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {properties.map((property) => (
         <Card key={property.id} className="hover:shadow-lg transition-shadow">
+          {property.images && property.images.length > 0 && (
+            <div className="w-full h-48 overflow-hidden rounded-t-lg">
+              <Image
+                src={property.images[0]}
+                alt={property.name}
+                width={400}
+                height={200}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
