@@ -11,7 +11,6 @@ import {
   date,
   pgEnum,
 } from "drizzle-orm/pg-core";
-import { createId } from "@paralleldrive/cuid2";
 
 // Enums
 export const subscriptionPlanEnum = pgEnum("subscription_plan", [
@@ -50,9 +49,7 @@ export const inquiryStatusEnum = pgEnum("inquiry_status", [
 
 // Users table (Property Owners) - Extended for NextAuth
 export const users = pgTable("users", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   emailVerified: timestamp("emailVerified"),
   name: varchar("name", { length: 255 }),
@@ -98,9 +95,7 @@ export const verificationTokens = pgTable("verificationTokens", {
 
 // Properties table
 export const properties = pgTable("properties", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   ownerId: uuid("owner_id")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
@@ -116,9 +111,7 @@ export const properties = pgTable("properties", {
 
 // Units table
 export const units = pgTable("units", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   propertyId: uuid("property_id")
     .references(() => properties.id, { onDelete: "cascade" })
     .notNull(),
@@ -143,9 +136,7 @@ export const units = pgTable("units", {
 
 // Tenants table
 export const tenants = pgTable("tenants", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   propertyId: uuid("property_id")
     .references(() => properties.id, { onDelete: "cascade" })
     .notNull(),
@@ -164,9 +155,7 @@ export const tenants = pgTable("tenants", {
 
 // Leases table
 export const leases = pgTable("leases", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   unitId: uuid("unit_id")
     .references(() => units.id, { onDelete: "cascade" })
     .notNull(),
@@ -186,9 +175,7 @@ export const leases = pgTable("leases", {
 
 // Payments table
 export const payments = pgTable("payments", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   leaseId: uuid("lease_id")
     .references(() => leases.id, { onDelete: "cascade" })
     .notNull(),
@@ -205,9 +192,7 @@ export const payments = pgTable("payments", {
 
 // Inquiries table
 export const inquiries = pgTable("inquiries", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   propertyId: uuid("property_id").references(() => properties.id, {
     onDelete: "cascade",
   }),
@@ -223,9 +208,7 @@ export const inquiries = pgTable("inquiries", {
 
 // Chat Conversations table
 export const chatConversations = pgTable("chat_conversations", {
-  id: uuid("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
+  id: uuid("id").primaryKey().defaultRandom(),
   propertyId: uuid("property_id").references(() => properties.id, {
     onDelete: "cascade",
   }),
