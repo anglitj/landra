@@ -4,7 +4,7 @@ import { getSession } from "@/lib/session";
 import { db } from "@/lib/db";
 import { units, properties } from "@/lib/db/schema";
 import { unitSchema, type UnitFormData } from "@/lib/validations";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function createUnit(propertyId: string, data: UnitFormData) {
@@ -107,9 +107,7 @@ export async function getUnit(unitId: string) {
       })
       .from(units)
       .innerJoin(properties, eq(units.propertyId, properties.id))
-      .where(
-        and(eq(units.id, unitId), eq(properties.ownerId, session.userId))
-      );
+      .where(and(eq(units.id, unitId), eq(properties.ownerId, session.userId)));
 
     return unit;
   } catch (error) {
@@ -134,9 +132,7 @@ export async function updateUnit(unitId: string, data: UnitFormData) {
       })
       .from(units)
       .innerJoin(properties, eq(units.propertyId, properties.id))
-      .where(
-        and(eq(units.id, unitId), eq(properties.ownerId, session.userId))
-      );
+      .where(and(eq(units.id, unitId), eq(properties.ownerId, session.userId)));
 
     if (!existingUnit) {
       throw new Error("Unit not found or unauthorized");
@@ -185,9 +181,7 @@ export async function deleteUnit(unitId: string) {
       })
       .from(units)
       .innerJoin(properties, eq(units.propertyId, properties.id))
-      .where(
-        and(eq(units.id, unitId), eq(properties.ownerId, session.userId))
-      );
+      .where(and(eq(units.id, unitId), eq(properties.ownerId, session.userId)));
 
     if (!existingUnit) {
       throw new Error("Unit not found or unauthorized");
@@ -200,5 +194,42 @@ export async function deleteUnit(unitId: string) {
   } catch (error) {
     console.error("Error deleting unit:", error);
     return { success: false, error: "Failed to delete unit" };
+  }
+}
+
+export async function getAllUnits() {
+  const session = await getSession();
+
+  if (!session?.userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    const results = await db
+      .select({
+        id: units.id,
+        propertyId: units.propertyId,
+        unitNumber: units.unitNumber,
+        monthlyRent: units.monthlyRent,
+        depositRequired: units.depositRequired,
+        advanceRequired: units.advanceRequired,
+        sizeSqm: units.sizeSqm,
+        bedrooms: units.bedrooms,
+        bathrooms: units.bathrooms,
+        isAvailable: units.isAvailable,
+        images: units.images,
+        createdAt: units.createdAt,
+        updatedAt: units.updatedAt,
+        propertyName: properties.name,
+      })
+      .from(units)
+      .leftJoin(properties, eq(units.propertyId, properties.id))
+      .where(eq(properties.ownerId, session.userId))
+      .orderBy(desc(units.createdAt));
+
+    return results;
+  } catch (error) {
+    console.error("Error fetching all units:", error);
+    throw new Error("Failed to fetch units");
   }
 }
