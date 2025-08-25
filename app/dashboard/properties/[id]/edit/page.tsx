@@ -1,4 +1,4 @@
-import { getProperty, updateProperty } from "@/lib/actions/properties";
+import { getProperty } from "@/lib/actions/properties";
 import DashboardLayout from "@/components/dashboard/layout";
 import PropertyForm from "@/components/property/property-form";
 import { notFound } from "next/navigation";
