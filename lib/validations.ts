@@ -7,6 +7,7 @@ export const propertySchema = z.object({
   description: z.string().optional(),
   totalUnits: z.number().min(0, "Total units must be 0 or greater").optional(),
   amenities: z.array(z.string()).optional(),
+  images: z.array(z.string()).optional(),
   rules: z.string().optional(),
 });
 
