@@ -1,9 +1,11 @@
 import { getProperty } from "@/lib/actions/properties";
+import { getUnits } from "@/lib/actions/units";
 import DashboardLayout from "@/components/dashboard/layout";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import UnitManagement from "@/components/unit/unit-management";
 
 interface PropertyDetailsPageProps {
   params: { id: string };
@@ -13,6 +15,7 @@ export default async function PropertyDetailsPage({
   params,
 }: PropertyDetailsPageProps) {
   const property = await getProperty(params.id);
+  const units = await getUnits(params.id);
 
   if (!property) {
     notFound();
@@ -20,7 +23,7 @@ export default async function PropertyDetailsPage({
 
   return (
     <DashboardLayout>
-      <div className="max-w-2xl mx-auto py-8">
+      <div className="max-w-6xl mx-auto py-8 space-y-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
@@ -78,6 +81,8 @@ export default async function PropertyDetailsPage({
             </div>
           </CardContent>
         </Card>
+
+        <UnitManagement propertyId={params.id} units={units} />
       </div>
     </DashboardLayout>
   );
