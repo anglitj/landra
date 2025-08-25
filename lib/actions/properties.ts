@@ -27,6 +27,7 @@ export async function createProperty(data: PropertyFormData) {
         description: validatedData.description,
         totalUnits: validatedData.totalUnits || 0,
         amenities: validatedData.amenities || [],
+        images: validatedData.images || [],
         rules: validatedData.rules,
       })
       .returning();
@@ -106,6 +107,7 @@ export async function updateProperty(
         description: validatedData.description,
         totalUnits: validatedData.totalUnits || 0,
         amenities: validatedData.amenities || [],
+        images: validatedData.images || [],
         rules: validatedData.rules,
         updatedAt: new Date(),
       })
