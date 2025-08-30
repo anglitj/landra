@@ -127,6 +127,7 @@ export function LeaseForm({
   const onSubmit = async (data: LeaseFormData) => {
     setIsLoading(true);
     setError(null);
+    console.log("LeaseFormData", data);
 
     try {
       const formData = {
@@ -171,7 +172,9 @@ export function LeaseForm({
     const endDateValue = new Date(startDateValue);
     endDateValue.setFullYear(endDateValue.getFullYear() + 1);
 
-    setValue("startDate", startDateValue);
+    console.log("Start date changed to:", startDateValue);
+    console.log("lease:", lease);
+    // setValue("startDate", startDateValue);
     if (!lease) {
       // Only auto-set for new leases
       setValue("endDate", endDateValue);
@@ -190,18 +193,6 @@ export function LeaseForm({
   const availableUnits = lease
     ? units || []
     : (units || []).filter((unit) => unit.isAvailable);
-
-  // Debug logging
-  console.log("LeaseForm - Total units:", units?.length || 0);
-  console.log("LeaseForm - Available units:", availableUnits?.length || 0);
-  console.log(
-    "LeaseForm - Units availability:",
-    units?.map((u) => ({
-      id: u.id,
-      unitNumber: u.unitNumber,
-      isAvailable: u.isAvailable,
-    }))
-  );
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
