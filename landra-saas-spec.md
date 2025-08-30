@@ -230,18 +230,18 @@ getInquiryAnalytics()        // Inquiry analytics
 
 #### Phase 1 (Weeks 1-3): Foundation
 
-- [ ] User authentication & registration (NextAuth.js, Server Actions)
-- [ ] Property creation and basic management (Drizzle ORM, Server Actions)
-- [ ] Unit management (CRUD operations, Drizzle ORM, Server Actions)
-- [ ] File upload for property images (multer, aws-sdk, AWS S3)
-- [ ] Basic responsive UI with Tailwind
+- [x] User authentication & registration (NextAuth.js, Server Actions)
+- [x] Property creation and basic management (Drizzle ORM, Server Actions)
+- [x] Unit management (CRUD operations, Drizzle ORM, Server Actions)
+- [x] File upload for property images (multer, aws-sdk, AWS S3)
+- [x] Basic responsive UI with Tailwind
 
-#### Phase 2 (Weeks 4-5): Core Property Management
+#### Phase 2 (Weeks 4-5): Core Property Management ✅
 
-- [ ] Tenant management system (Drizzle ORM, Server Actions)
-- [ ] Lease creation and management (Drizzle ORM, Server Actions)
-- [ ] Due date calculation and tracking (Server Actions)
-- [ ] Basic dashboard with key metrics (Server Actions)
+- [x] Tenant management system (Drizzle ORM, Server Actions)
+- [x] Lease creation and management (Drizzle ORM, Server Actions)
+- [x] Due date calculation and tracking (Server Actions)
+- [x] Basic dashboard with key metrics (Server Actions)
 
 #### Phase 3 (Weeks 6-7): Payment System
 
@@ -275,7 +275,24 @@ getInquiryAnalytics()        // Inquiry analytics
 - [ ] Monitoring and logging
 - [ ] User onboarding flow
 
-### 5. Chatbot Knowledge Base Structure
+### 5. Post-MVP Enhancements (Phase 7)
+
+#### Dashboard & Management Enhancements
+
+- [ ] Comprehensive lease dashboard with status overview
+- [ ] Automated lease document generation with templates
+- [ ] Historical tracking for units and leases
+- [ ] Advanced notification system for:
+  - Lease renewals
+  - Maintenance schedules
+  - Important dates
+  - Payment reminders
+- [ ] Reporting and analytics improvements
+  - Custom report generation
+  - Export functionality
+  - Advanced filtering options
+
+### 6. Chatbot Knowledge Base Structure
 
 #### Property Information Categories
 
